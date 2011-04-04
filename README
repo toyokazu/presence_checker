@@ -96,7 +96,6 @@ LoadModule mod_shib /opt/local/lib/shibboleth/mod_shib_22.so
 ### protect /auth/shibboleth/callback for omniauth
 <Location /presence_checker/auth/shibboleth/callback>
   AuthType shibboleth
-  ShibRequestSetting requireSessionWith Intranet
   ShibRequestSetting requireSession 1
   require valid-user
 </Location>
