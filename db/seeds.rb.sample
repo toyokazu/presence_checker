@@ -1,0 +1,3 @@
+# course = Course.create(:moodle_id => xxx, :name => 'Information Security')
+# Lecture.create(:course => course, :description => '2010-04-08', :start_time => Time.local(2010, 4, 8, 15, 0), :end_time => Time.local(2010, 4, 8, 16, 30))
+# Lecture.create(:course => course, :description => '2010-04-15', :start_time => Time.local(2010, 4, 15, 15, 0), :end_time => Time.local(2010, 4, 15, 16, 30))

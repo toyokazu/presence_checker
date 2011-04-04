@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>出席確認システム: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'presence_checker' %>
+</head>
+<body>
+
+  <div class="frame">
+    <div class="header">
+      <% if session[:cas_user].nil? %>
+        <%= link_to("ログイン", CASClient::Frameworks::Rails::Filter.login_url(controller)) %>
+      <% else %>
+        <%= h session[:cas_user] %>|<%= link_to 'ログアウト', :controller => 'root', :action => 'logout' %>
+      <% end %>
+    </div>
+
+    <div class="main">
+      <div class="contents">
+        <p style="color: green"><%= flash[:notice] %></p>
+        <%= yield %>
+      </div>
+
+      <div class="sidebar">
+          <ul>
+            <li><%= link_to '科目一覧', courses_path %></li>
+          </ul>
+      </div>
+
+      <div class="clear"><hr/></div>
+    </div>
+
+    <div class="footer">
+      <%= link_to 'Top ページ', :controller => 'root' %>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<% title "出席登録" %>
+
+<% form_for :presence, :url => {:action => 'create'} do |f| %>
+<table>
+  <tr>
+    <td>科目名</td>
+    <td><%=h @presence.course.name %></td>
+    <%= f.hidden_field 'course_id' %>
+  </tr>
+  <tr>
+    <td>ID</td>
+    <td><%=h @presence.login %></td>
+    <%= f.hidden_field 'login' %>
+  </tr>
+  <tr>
+    <td>氏名</td>
+    <% if !@presence.name.nil? %>
+    <td><%=h @presence.name %></td>
+    <%= f.hidden_field 'name' %>
+    <% else %>
+    <td><%= f.text_field 'name' %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>E-mail</td>
+    <% if !@presence.mail.nil? %>
+    <td><%=h @presence.mail %></td>
+    <%= f.hidden_field 'mail' %>
+    <% else %>
+    <td><%= f.text_field 'mail' %></td>
+    <% end %>
+  </tr>
+  <% if @presence.proxyed %>
+    <tr>
+      <td>友人のPCでの登録</td><td>はい</td>
+    </tr>
+  <% end %>
+  <%= f.hidden_field 'proxyed' %>
+</table>
+<%= submit_tag('登録') %>
+<% end %>

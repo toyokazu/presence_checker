@@ -1,0 +1,22 @@
+<% if @lecture.nil? %>
+<% title "すべての講義の出席確認" %>
+<% else %>
+<% title "#{@lecture.description}の講義の出席確認" %>
+<% end %>
+
+<table>
+  <tr>
+    <% if @lecture.nil? %>
+    <th>講義名</th>
+    <% end %>
+    <th>ID</th><th>時刻</th><th>友人のPCで登録</th>
+  </tr>
+<% @presences.each do |presence| %>
+  <tr>
+    <% if @lecture.nil? %>
+    <td><%=h presence.lecture.description %></td>
+    <% end %>
+    <td><%=h presence.login %></td><td><%=h presence.created_at %></td><td><%=h presence.proxyed ? 'はい' : 'いいえ' %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,14 @@
+<% form_for(@course) do |f| %>
+  <p>
+    <%= f.error_messages %>
+  </p>
+  <p>
+    <%= f.label :moodle_id, 'Moodle上での科目ID' %><br />
+    <%= f.text_field :moodle_id %>
+  </p>
+  <p>
+    <%= f.label :name, '科目名' %><br />
+    <%= f.text_field :name %>
+  </p>
+  <%= f.submit %>
+<% end %>

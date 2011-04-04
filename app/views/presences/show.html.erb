@@ -1,0 +1,19 @@
+<% title "登録内容" %>
+
+<table>
+  <tr>
+    <td>ID</td><td><%=h @presence.login %></td>
+  </tr>
+  <tr>
+    <td>氏名</td><td><%=h @presence.name %></td>
+  </tr>
+  <tr>
+    <td>E-mail</td><td><%=h @presence.mail %></td>
+  </tr>
+  <tr>
+    <td>時刻</td><td><%=h @presence.created_at %></td>
+  </tr>
+  <tr>
+    <td>友人のPCで登録</td><td><%=h @presence.proxyed ? 'はい' : 'いいえ' %></td>
+  </tr>
+</table>

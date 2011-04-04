@@ -1,0 +1,25 @@
+<% title "講義詳細" %>
+
+<p>
+  <b>科目:</b>
+  <%=h @lecture.course.name %>
+</p>
+
+<p>
+  <b>講義概要:</b>
+  <%=h @lecture.description %>
+</p>
+
+<p>
+  <b>開始時刻:</b>
+  <%=h @lecture.start_time %>
+</p>
+
+<p>
+  <b>終了時刻:</b>
+  <%=h @lecture.end_time %>
+</p>
+
+
+<%= link_to '編集', edit_lecture_path(@lecture) %> |
+<%= link_to '戻る', course_lectures_path(@lecture.course_id) %>

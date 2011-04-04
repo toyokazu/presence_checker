@@ -1,0 +1,22 @@
+<% form_for(@lecture) do |f| %>
+  <p>
+    <%= f.error_messages %>
+  </p>
+  <p>
+    <%= f.label :course_id, '科目' %><br />
+    <%= f.select(:course_id, Course.all.collect {|course| [course.name, course.id] }) %>
+  </p>
+  <p>
+    <%= f.label :description, '講義概要' %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :start_time, '開始時刻' %><br />
+    <%= f.datetime_select :start_time %>
+  </p>
+  <p>
+    <%= f.label :end_time, '終了時刻' %><br />
+    <%= f.datetime_select :end_time %>
+  </p>
+  <%= f.submit %>
+<% end %>

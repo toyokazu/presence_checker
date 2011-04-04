@@ -1,0 +1,6 @@
+<% title "講義の編集" %>
+
+<%= render 'form' %>
+
+<%= link_to '詳細', @lecture %> |
+<%= link_to '戻る', course_lectures_path(@lecture.course_id) %>

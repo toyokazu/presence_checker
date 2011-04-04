@@ -1,0 +1,5 @@
+<% title "新規講義作成" %>
+
+<%= render 'form' %>
+
+<%= link_to '戻る', (@lecture.course_id.nil?) ? lectures_path : course_lectures_path(@lecture.course_id) %>

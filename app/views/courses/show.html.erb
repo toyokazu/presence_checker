@@ -1,0 +1,13 @@
+<% title "科目詳細" %>
+<p>
+  <b>Moodle上での科目ID:</b>
+  <%=h @course.moodle_id %>
+</p>
+
+<p>
+  <b>科目名:</b>
+  <%=h @course.name %>
+</p>
+
+<%= link_to '編集', edit_course_path(@course) %> |
+<%= link_to '戻る', courses_path %>

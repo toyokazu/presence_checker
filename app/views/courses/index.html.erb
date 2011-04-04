@@ -1,0 +1,27 @@
+<% title "科目一覧" %>
+
+<table>
+  <tr>
+    <th>科目名</th>
+    <th colspan="<%=h admin_user? ? 5 : 3 %>"></th>
+  </tr>
+<% @courses.each do |course| %>
+  <tr>
+    <td><%=h course.name %></td>
+    <td><%= link_to '講義一覧', course_lectures_path(course.id) %></td>
+    <td><%= link_to '出席登録 (＊)', new_course_presence_path(course.id) %></td>
+    <td><%= link_to '出席確認', course_presences_path(course.id) %></td>
+    <% if admin_user? %>
+    <td><%= link_to '編集', edit_course_path(course) %></td>
+    <td><%= link_to '削除', course, :confirm => 'よろしいですか？', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<p>
+(＊) Moodleが使えない場合のみここから登録する．
+</p>
+
+<% if admin_user? %>
+<%= link_to '新規作成', new_course_path %><br/>
+<% end %>
