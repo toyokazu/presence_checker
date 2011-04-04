@@ -10,6 +10,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       end
     end
   end
-  provider :shibboleth, {:uid_attribute => 'eppn'}
+  provider :shibboleth, {:uid_attribute => 'uid',
+                         :extra_attributes => ['eppn']}
   #provider :cas, {:cas_server => 'http://localhost:8443', :disable_ssl_verification => true}
 end

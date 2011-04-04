@@ -87,8 +87,7 @@ class PresencesController < ApplicationController
   def init_presence(presence)
     remote_addr = remote_address
     if !ip_addr_check(IPAddr.new(remote_addr))
-      render :text => 'Error: 指定された条件で実行してください．'
-      return nil
+      redirect_to root_url, :flash => {:error => "指定された条件で実行してください．"} and return nil
     end
     presence.ip_addr = remote_addr
     # presence registration from Moodle (new action)
@@ -96,8 +95,7 @@ class PresencesController < ApplicationController
       # find Course related to the moodle course id
       presence.course = Course.first(:conditions => ['moodle_id = ?', params[:moodle_course_id]])
       if presence.course.nil?
-        render :text => 'Error: 有効な Moodle の Course ID が指定されていません．'
-        return nil
+        redirect_to root_url, :flash => {:error => "有効な Moodle の Course ID が指定されていません．"} and return nil
       end
     else
       # local presence registration (for students unregistered to Moodle, new action)
@@ -107,26 +105,23 @@ class PresencesController < ApplicationController
         if !params[:course_id].nil?
           presence.course = Course.find(params[:course_id])
         else
-          render :text => 'Error: 科目を選択してから出席登録してください．'
-          return nil
+          redirect_to root_url, :flash => {:error => "科目を選択してから出席登録してください．"} and return nil
         end
         presence.login = session[:user][:uid]
       else
         # create action
         if presence.login != session[:user][:uid]
-          render :text => 'Error: Moodle と同じユーザでログインしてください．'
-          return nil
+          redirect_to root_url, :flash => {:error => "Moodle と同じユーザでログインしてください．"} and return nil
         end
       end
     end
     # find ongoing Lecture
     presence.lecture = Lecture.with_course_id(presence.course.id).ongoing(Time.now).first
     if presence.lecture.nil?
-      render :text => 'Error: 現在開講中の講義がありません．'
-      return nil
+      redirect_to root_url, :flash => {:error => "Error: 現在開講中の講義がありません．"} and return nil
     end
     # check ip address duplication
-    owner = Presence.where('lecture_id = ? and ip_addr = ?', presence.lecture, presence.ip_addr)
+    owner = Presence.where('lecture_id = ? and ip_addr = ?', presence.lecture, presence.ip_addr).first
     if !owner.nil? && owner.login != presence.login
       presence.proxyed = true
     else
@@ -149,7 +144,7 @@ class PresencesController < ApplicationController
   end
 
   def ip_addr_check(remote_addr)
-    APP_CONFIG[:networks].map {|addr| IPAddr.new(addr)}
+    net_addrs = APP_CONFIG[:networks].map {|addr| IPAddr.new(addr)}
     net_addrs.any? {|net_addr| net_addr.include?(remote_addr)}
   end
 

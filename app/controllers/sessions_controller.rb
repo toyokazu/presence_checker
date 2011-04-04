@@ -1,11 +1,10 @@
 class SessionsController < ApplicationController
   def create
     session[:user] = {
-      :login => request.env["omniauth.auth"]["uid"],
-      :name => request.env["omniauth.auth"]["uid"],
-      :email => request.env["omniauth.auth"]["uid"]
+      :uid => request.env["omniauth.auth"]["uid"],
+      :eppn => request.env["omniauth.auth"]["eppn"]
     }
-    redirect_to session[:return_url], :flash => {:notice => "Welcome #{session[:user][:name]}"}
+    redirect_to session[:return_url], :flash => {:notice => "Welcome #{session[:user][:uid]}"}
   end
 
   def destroy

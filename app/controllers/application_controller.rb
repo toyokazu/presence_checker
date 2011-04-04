@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   def authenticate!
     if session[:user].nil?
       session[:return_url] = request.url
-      redirect_to shib_auth_url
+      redirect_to shib_auth_url and return
     end
     session[:return_url] = nil
   end
