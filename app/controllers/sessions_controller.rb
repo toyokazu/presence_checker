@@ -1,8 +1,7 @@
 class SessionsController < ApplicationController
   def create
     session[:user] = {
-      :uid => request.env["omniauth.auth"]["uid"],
-      :eppn => request.env["omniauth.auth"]["eppn"]
+      :uid => request.env["omniauth.auth"]["uid"]
     }
     redirect_to session[:return_url], :flash => {:notice => "Welcome #{session[:user][:uid]}"}
   end
