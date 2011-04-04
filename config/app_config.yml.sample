@@ -1,0 +1,10 @@
+development:
+  domain: localhost:3000
+  networks: [ 127.0.0.0/8 ]
+
+test:
+  domain: test.host
+
+production:
+  domain: example.com
+  networks: [ 12.34.56.78/24, 34.56.78.90/24 ]

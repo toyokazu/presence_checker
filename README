@@ -24,6 +24,11 @@ After installing RubyGems and bundle gem, you can install required gems by the c
 
 % bundle install
 
+== Application configuration
+
+% cp config/app_config.yml.sample config/app_config.yml
+
+and edit source network addresses where you want to permit presence registrations.
 
 == DB configuration
 

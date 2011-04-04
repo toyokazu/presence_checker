@@ -149,10 +149,7 @@ class PresencesController < ApplicationController
   end
 
   def ip_addr_check(remote_addr)
-    net_addrs = [
-      "133.101.56.0/21",
-      "127.0.0.0/8"
-    ].map {|addr| IPAddr.new(addr)}
+    APP_CONFIG[:networks].map {|addr| IPAddr.new(addr)}
     net_addrs.any? {|net_addr| net_addr.include?(remote_addr)}
   end
 
