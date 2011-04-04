@@ -106,10 +106,10 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
 1.  Create web link to URL https://pchecker-host/pchecker-path/presences/new
 at Moodle course by setting "extended parameters" named as follows:
 
- ** login = User - User Name
- ** name = User - Sir & Given Name
- ** mail = User - Mail Address
- ** moodle_course_id = Course - id
+        * login = User - User Name
+        * name = User - Sir & Given Name
+        * mail = User - Mail Address
+        * moodle_course_id = Course - id
 
   Assumed new window size (width, height) = (800, 600) for default css (precense_checker.css).
 
