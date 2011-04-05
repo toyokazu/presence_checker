@@ -24,6 +24,16 @@ After installing RubyGems and bundle gem, you can install required gems by the c
 
     % bundle install
 
+Update 'oa-enterprise' gem to the Shibboleth supported version.
+
+    % cd ../
+    % git clone https://github.com/toyokazu/omniauth.git
+    % cd omniauth/oa-enterprise
+    % bundle install
+    % rake gem
+    % gem install dist/oa-enterprise-0.2.0.gem
+
+
 ## Application configuration
 
     % cp config/app_config.yml.sample config/app_config.yml
@@ -56,7 +66,7 @@ For testing, just use WEBrick.
 
 and access http://localhost:3000/.
 
-For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provides attributes via environment variables. Currently we can do this by using Phusion Passenger as an application container.
+For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provides attributes via environment variables. Currently we can do it by using Phusion Passenger as an application container.
 
     ### example httpd.conf configuration
     % sudo vi /etc/apache2/httpd.conf
@@ -81,7 +91,8 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
       </Directory>
     
     </VirtualHost>
-    
+
+    ### create a link to public directory of the rails project    
     % ln -s /Users/username/rails-apps/presence_checker/public /Library/WebServer/Documents/presence_checker
     
     ### example mod_shib configuration
