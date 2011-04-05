@@ -58,7 +58,7 @@ You can create initial data by using db/seeds.rb script.
     % rake db:seed
 
 
-## Starting server
+## Starting server and Shibboleth configuration
 
 For testing, just use WEBrick.
 
@@ -111,6 +111,12 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
       require valid-user
     </Location>
 
+User login name (uid) is provided as request.env["omniauth"]["uid"] by OmniAuth. The default setting of the Shibboleth attribute name used as the user login name (uid) is "uid". If you want to change the Shibboleth attribute name, edit omniauth.rb.
+
+    ### change :uid_attribute option if needed
+    % vi config/initializers/omniauth.rb
+      provider :shibboleth, {:uid_attribute => 'uid'}
+
 
 ## Collaborate with Moodle
 
@@ -122,7 +128,7 @@ at Moodle course by setting "extended parameters" named as follows:
         * mail = User - Mail Address
         * moodle_course_id = Course - id
 
-  Assumed new window size (width, height) = (800, 600) for default css (precense_checker.css).
+  Set window configuration to 'open new window' and window size (width, height) = (800, 600) may be better for the usability.
 
 2.  Create course at Presence Checker
 (access URL https://pchecker-host/pchecker-path/courses/new)
