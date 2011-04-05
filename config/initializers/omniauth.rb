@@ -1,11 +1,11 @@
 #require 'net/http'
 Rails.application.config.middleware.use OmniAuth::Builder do
   configure do |config|
-    #config.path_prefix = '/test_omniauth/auth' if RAILS_ENV == 'production'
+    #config.path_prefix = '/presence_checker/auth' if RAILS_ENV == 'production'
     if RAILS_ENV == 'production'
       config.on_failure = Proc.new do |env|
         message_key = env['omniauth.error.type']
-        new_path = "/test_omniauth/auth/failure?message=#{message_key}"
+        new_path = "/presence_checker/auth/failure?message=#{message_key}"
         [302, {'Location' => new_path, 'Content-Type'=> 'text/html'}, []]
       end
     end
