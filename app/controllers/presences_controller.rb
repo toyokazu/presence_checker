@@ -68,7 +68,7 @@ class PresencesController < ApplicationController
     respond_to do |format|
       begin
         if @presence.save
-          flash[:notice] = '出席登録が完了しました．'
+          flash[:notice] = t('presences.notices.registration_finished')
           format.html { redirect_to(@presence) }
           format.xml  { render :xml => @presence, :status => :created, :location => @presence }
         else
@@ -76,7 +76,7 @@ class PresencesController < ApplicationController
           format.xml  { render :xml => @presence.errors, :status => :unprocessable_entity }
         end
       rescue => error
-        flash[:notice] = 'すでに登録済みです．'
+        flash[:notice] = t('presences.notices.already_registered')
         format.html { render :action => "new" }
         format.xml  { render :xml => @presence.errors, :status => :unprocessable_entity }
       end
@@ -87,7 +87,7 @@ class PresencesController < ApplicationController
   def init_presence(presence)
     remote_addr = remote_address
     if !ip_addr_check(IPAddr.new(remote_addr))
-      redirect_to root_url, :flash => {:error => "指定された条件で実行してください．"} and return nil
+      redirect_to root_url, :flash => {:error => t('presences.errors.execute_under_the_specified_condition')} and return nil
     end
     presence.ip_addr = remote_addr
     # presence registration from Moodle (new action)
@@ -95,7 +95,7 @@ class PresencesController < ApplicationController
       # find Course related to the moodle course id
       presence.course = Course.first(:conditions => ['moodle_id = ?', params[:moodle_course_id]])
       if presence.course.nil?
-        redirect_to root_url, :flash => {:error => "有効な Moodle の Course ID が指定されていません．"} and return nil
+        redirect_to root_url, :flash => {:error => t('presences.errors.valid_moodle_course_id_is_not_specified')} and return nil
       end
     else
       # local presence registration (for students unregistered to Moodle, new action)
@@ -105,20 +105,20 @@ class PresencesController < ApplicationController
         if !params[:course_id].nil?
           presence.course = Course.find(params[:course_id])
         else
-          redirect_to root_url, :flash => {:error => "科目を選択してから出席登録してください．"} and return nil
+          redirect_to root_url, :flash => {:error => t('presences.errors.register_after_selecting_a_course')} and return nil
         end
         presence.login = session[:user][:uid]
       else
         # create action
         if presence.login != session[:user][:uid]
-          redirect_to root_url, :flash => {:error => "Moodle と同じユーザでログインしてください．"} and return nil
+          redirect_to root_url, :flash => {:error => t('presences.errors.login_as_the_same_user_as_moodle')} and return nil
         end
       end
     end
     # find ongoing Lecture
     presence.lecture = Lecture.with_course_id(presence.course.id).ongoing(Time.now).first
     if presence.lecture.nil?
-      redirect_to root_url, :flash => {:error => "Error: 現在開講中の講義がありません．"} and return nil
+      redirect_to root_url, :flash => {:error => t('presences.errors.no_lecture_is_ongoing')} and return nil
     end
     # check ip address duplication
     owner = Presence.where('lecture_id = ? and ip_addr = ?', presence.lecture, presence.ip_addr).first

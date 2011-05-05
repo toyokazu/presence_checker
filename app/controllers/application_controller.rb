@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private 
   # change the condition for your environment
   def admin_user?
-    session[:user][:uid] == 'akiyama'
+    session[:user][:uid] == APP_CONFIG[:admin]
   end
 
   def redirect_back_or_default

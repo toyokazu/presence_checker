@@ -1,22 +1,22 @@
-<% title "講義一覧" %>
+<% title "#{t('activerecord.models.lecture')}#{t('list')}" %>
 
 <table>
   <tr>
-    <th>講義概要</th>
+    <th><%= t('activerecord.attributes.lecture.description') %></th>
     <th colspan="<%=h admin_user? ? 3 : 1 %>"></th>
   </tr>
 <% @lectures.each do |lecture| %>
   <tr>
     <td><%=h lecture.description %></td>
-    <td><%= link_to('出席確認', lecture_presences_path(:lecture_id => lecture.id)) %></td>
+    <td><%= link_to(t('activerecord.models.presence') + t('confirmation'), lecture_presences_path(:lecture_id => lecture.id)) %></td>
     <% if admin_user? %>
-    <td><%= link_to '編集', edit_lecture_path(lecture) %></td>
-    <td><%= link_to '削除', lecture, :confirm => 'よろしいですか？', :method => :delete %></td>
+    <td><%= link_to t('edit'), edit_lecture_path(lecture) %></td>
+    <td><%= link_to t('destroy'), lecture, :confirm => t('confirm_message'), :method => :delete %></td>
     <% end %>
   </tr>
 <% end %>
 </table>
 
 <% if admin_user? %>
-<%= link_to '新規作成', new_course_lecture_path(@course_id) %> 
+<%= link_to t('new'), new_course_lecture_path(@course_id) %> 
 <% end %>

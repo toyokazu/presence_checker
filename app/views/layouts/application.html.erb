@@ -15,8 +15,8 @@
       <%= content_tag :h1, yield(:title) if show_title? %>
       <p>
       <%= link_to 'Top', root_path %> / 
-      <%= link_to '科目一覧', courses_path %> / 
-      <%= link_to '出席登録一覧', presences_path %>
+      <%= link_to t("activerecord.models.course") + t("list"), courses_path %> / 
+      <%= link_to t("activerecord.models.presence") + t("list"), presences_path %>
       </p>
       <%= yield %>
     </div>

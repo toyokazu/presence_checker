@@ -27,18 +27,18 @@ After installing RubyGems and bundle gem, you can install required gems by the c
 Update 'oa-enterprise' gem to the Shibboleth supported version.
 
     % cd ../
-    % git clone https://github.com/toyokazu/omniauth.git
+    % git clone https://github.com/toyokazu/omniauth_shibboleth.git
     % cd omniauth/oa-enterprise
     % bundle install
     % rake gem
-    % gem install dist/oa-enterprise-0.2.0.gem
+    % gem install dist/oa-enterprise-x.x.x.gem
 
 
 ## Application configuration
 
     % cp config/app_config.yml.sample config/app_config.yml
 
-and edit source network addresses where you want to permit presence registrations.
+then edit admin user name (admin) and source network addresses (networks) where you want to permit presence registrations.
 
 ## DB configuration
 
@@ -77,7 +77,7 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
     </Directory>
     ### Virtual Host and Passenger Settings
     PassengerRoot /Users/username/.rvm/gems/ruby-1.9.2-head/gems/passenger-3.0.4
-    PassengerRuby /Users/groupname/.rvm/wrappers/ruby-1.9.2-head/ruby
+    PassengerRuby /Users/username/.rvm/wrappers/ruby-1.9.2-head/ruby
     PassengerMaxPoolSize 10
     PassengerUser username
     PassengerGroup groupname
@@ -113,9 +113,21 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
 
 User login name (uid) is provided as request.env["omniauth"]["uid"] by OmniAuth. The default setting of the Shibboleth attribute name used as the user login name (uid) is "uid". If you want to change the Shibboleth attribute name, edit omniauth.rb.
 
-    ### change :uid_attribute option if needed
+    ### change :uid_attr option if needed
     % vi config/initializers/omniauth.rb
-      provider :shibboleth, {:uid_attribute => 'uid'}
+      provider :shibboleth, {:uid_attr => 'uid'}
+
+OmniAuth seems not to handle Phusion Passenger 'sub uri' for failure path (/auth/failure). So thus, the configuration as the following should be added to the omniauth.rb.
+
+    configure do |config|
+      if RAILS_ENV == 'production'
+        config.on_failure = Proc.new do |env|
+          message_key = env['omniauth.error.type']
+          new_path = "/presence_checker/auth/failure?message=#{message_key}"
+          [302, {'Location' => new_path, 'Content-Type'=> 'text/html'}, []]
+        end
+      end
+    end
 
 
 ## Collaborate with Moodle

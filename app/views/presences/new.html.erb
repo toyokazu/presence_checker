@@ -1,9 +1,9 @@
-<% title "出席登録" %>
+<% title t('activerecord.models.presence') + t('registration') %>
 
 <% form_for :presence, :url => {:action => 'create'} do |f| %>
 <table>
   <tr>
-    <td>科目名</td>
+    <td><%= t('activerecord.attributes.course.name') %></td>
     <td><%=h @presence.course.name %></td>
     <%= f.hidden_field 'course_id' %>
   </tr>
@@ -13,7 +13,7 @@
     <%= f.hidden_field 'login' %>
   </tr>
   <tr>
-    <td>氏名</td>
+    <td><%= t('activerecord.attributes.presence.name') %></td>
     <% if !@presence.name.nil? %>
     <td><%=h @presence.name %></td>
     <%= f.hidden_field 'name' %>
@@ -22,7 +22,7 @@
     <% end %>
   </tr>
   <tr>
-    <td>E-mail</td>
+    <td><%= t('activerecord.attributes.presence.mail') %></td>
     <% if !@presence.mail.nil? %>
     <td><%=h @presence.mail %></td>
     <%= f.hidden_field 'mail' %>
@@ -32,10 +32,10 @@
   </tr>
   <% if @presence.proxyed %>
     <tr>
-      <td>友人のPCでの登録</td><td>はい</td>
+      <td><%= t('activerecord.attributes.presence.proxyed') %></td><td><%= t('yes') %></td>
     </tr>
   <% end %>
   <%= f.hidden_field 'proxyed' %>
 </table>
-<%= submit_tag('登録') %>
+<%= submit_tag(t('registration')) %>
 <% end %>

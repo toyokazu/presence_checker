@@ -1,19 +1,19 @@
-<% title "登録内容" %>
+<% title "#{t('registration')} #{t('detail')}" %>
 
 <table>
   <tr>
     <td>ID</td><td><%=h @presence.login %></td>
   </tr>
   <tr>
-    <td>氏名</td><td><%=h @presence.name %></td>
+    <td><%= t('activerecord.attributes.presence.name') %></td><td><%=h @presence.name %></td>
   </tr>
   <tr>
-    <td>E-mail</td><td><%=h @presence.mail %></td>
+    <td><%= t('activerecord.attributes.presence.mail') %></td><td><%=h @presence.mail %></td>
   </tr>
   <tr>
-    <td>時刻</td><td><%=h @presence.created_at %></td>
+    <td><%= t('activerecord.attributes.presence.created_at') %></td><td><%=h @presence.created_at %></td>
   </tr>
   <tr>
-    <td>友人のPCで登録</td><td><%=h @presence.proxyed ? 'はい' : 'いいえ' %></td>
+    <td><%= t('activerecord.attributes.presence.proxyed') %></td><td><%=h @presence.proxyed ? t('yes') : t('no') %></td>
   </tr>
 </table>

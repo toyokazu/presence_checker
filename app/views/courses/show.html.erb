@@ -1,13 +1,13 @@
-<% title "科目詳細" %>
+<% title "#{t('activerecord.models.course')} #{t('detail')}" %>
 <p>
-  <b>Moodle上での科目ID:</b>
+  <b><%= t('activerecord.attributes.course.moodle_id') %>:</b>
   <%=h @course.moodle_id %>
 </p>
 
 <p>
-  <b>科目名:</b>
+  <b><%= t('activerecord.attributes.course.name') %>:</b>
   <%=h @course.name %>
 </p>
 
-<%= link_to '編集', edit_course_path(@course) %> |
-<%= link_to '戻る', courses_path %>
+<%= link_to t('edit'), edit_course_path(@course) %> |
+<%= link_to t('back'), courses_path %>

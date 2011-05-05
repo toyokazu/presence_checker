@@ -24,5 +24,6 @@ PresenceChecker::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.time_zone = 'Osaka'
+  I18n.default_locale = :ja
 end
 

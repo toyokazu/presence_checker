@@ -48,4 +48,5 @@ PresenceChecker::Application.configure do
   config.active_support.deprecation = :notify
 
   config.time_zone = 'Osaka'
+  I18n.default_locale = :ja
 end

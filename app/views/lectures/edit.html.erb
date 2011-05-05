@@ -1,6 +1,6 @@
-<% title "講義の編集" %>
+<% title "#{t('edit')} '#{t('activerecord.models.lecture')}'" %>
 
 <%= render 'form' %>
 
-<%= link_to '詳細', @lecture %> |
-<%= link_to '戻る', course_lectures_path(@lecture.course_id) %>
+<%= link_to t('detail'), @lecture %> |
+<%= link_to t('back'), course_lectures_path(@lecture.course_id) %>
