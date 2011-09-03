@@ -1,13 +1,14 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+gem 'rails', '3.1.0'
+#gem 'rails', '3.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 gem 'nifty-generators'
-gem 'omniauth'
+gem 'omniauth', '0.3.0.rc1'
 
 # Use unicorn as the web server
 # gem 'unicorn'

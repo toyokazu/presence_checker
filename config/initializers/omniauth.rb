@@ -2,7 +2,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   configure do |config|
     #config.path_prefix = '/presence_checker/auth' if RAILS_ENV == 'production'
-    if RAILS_ENV == 'production'
+    if Rails.env == 'production'
+    #if RAILS_ENV == 'production'
       config.on_failure = Proc.new do |env|
         message_key = env['omniauth.error.type']
         new_path = "/presence_checker/auth/failure?message=#{message_key}"

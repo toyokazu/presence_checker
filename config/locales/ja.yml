@@ -33,40 +33,6 @@ ja:
       register_after_selecting_a_course: "科目を選択してから出席登録してください．"
       login_as_the_same_user_as_moodle: "Moodle と同じユーザでログインしてください．"
       no_lecture_is_ongoing: "現在開講中の講義がありません．"
-  activerecord:
-    models:
-      course: "科目"
-      lecture: "講義"
-      presence: "出席"
-    attributes:
-      course:
-        moodle_id: "Moodle上での科目ID"
-        name: "科目名"
-      lecture:
-        course_id: "科目"
-        description: "講義概要"
-        start_time: "開始時刻"
-        end_time: "終了時刻"
-      presence:
-        name: "氏名"
-        mail: "E-mail"
-        created_at: "時刻"
-        proxyed: "友人のPCで代理登録"
-
-    errors:
-      template:
-        header:
-          one:   "%{model}にエラーが発生しました。"
-          other: "%{model}に%{count}つのエラーが発生しました。"
-        body: "次の項目を確認してください。"
-
-      messages:
-        taken: "はすでに存在します。"
-        record_invalid: "バリデーションに失敗しました。 %{errors}"
-        <<: *errors_messages
-
-      full_messages:
-        format: "%{attribute}%{message}"
 
   date:
     formats:
@@ -74,11 +40,51 @@ ja:
       short: "%m/%d"
       long: "%Y年%m月%d日(%a)"
 
-    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
-    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+    day_names:
+      - 日曜日
+      - 月曜日
+      - 火曜日
+      - 水曜日
+      - 木曜日
+      - 金曜日
+      - 土曜日
+    abbr_day_names:
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
 
-    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
-    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    month_names:
+      - ~
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
+    abbr_month_names:
+      - ~
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
 
     order:
       - :year
@@ -233,3 +239,38 @@ ja:
       less_than_or_equal_to: "は%{count}以下の値にしてください。"
       odd: "は奇数にしてください。"
       even: "は偶数にしてください。"
+
+  activerecord:
+    models:
+      course: "科目"
+      lecture: "講義"
+      presence: "出席"
+    attributes:
+      course:
+        moodle_id: "Moodle上での科目ID"
+        name: "科目名"
+      lecture:
+        course_id: "科目"
+        description: "講義概要"
+        start_time: "開始時刻"
+        end_time: "終了時刻"
+      presence:
+        name: "氏名"
+        mail: "E-mail"
+        created_at: "時刻"
+        proxyed: "友人のPCで代理登録"
+
+    errors:
+      template:
+        header:
+          one:   "%{model}にエラーが発生しました。"
+          other: "%{model}に%{count}つのエラーが発生しました。"
+        body: "次の項目を確認してください。"
+
+      messages:
+        taken: "はすでに存在します。"
+        record_invalid: "バリデーションに失敗しました。 %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute}%{message}"

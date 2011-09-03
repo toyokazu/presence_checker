@@ -1,7 +1,8 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+# US English translations for Ruby on Rails
+#
+# Use this as the base for the locale file of your language.
 
-en:
+"en":
   list: " List"
   confirmation: " Confirmation"
   registration: " Registration"
@@ -30,43 +31,6 @@ en:
       register_after_selecting_a_course: "Register after selecting a course."
       login_as_the_same_user_as_moodle: "Login as the same user as the Moodle user."
       no_lecture_is_ongoing: "No lecture is ongoing."
-  activerecord:
-    models:
-      course: "Course"
-      lecture: "Lecture"
-      presence: "Presence"
-    attributes:
-      course:
-        moodle_id: "Moodle Course ID"
-        name: "Course Name"
-      lecture:
-        course_id: "Course"
-        description: "Lecture Overview"
-        start_time: "Start Time"
-        end_time: "End Time"
-      presence:
-        name: "Name"
-        mail: "E-mail"
-        created_at: "Time"
-        proxyed: "Proxied Registration"
-    errors:
-      template:
-        header:
-          one:    "1 error prohibited this %{model} from being saved"
-          other:  "%{count} errors prohibited this %{model} from being saved"
-        body: "There were problems with the following fields:"
-
-      messages:
-        taken: "has already been taken"
-        record_invalid: "Validation failed: %{errors}"
-        <<: *errors_messages
-
-      full_messages:
-        format: "%{attribute} %{message}"
-
-# US English translations for Ruby on Rails
-#
-# Use this as the base for the locale file of your language.
 
   date:
     formats:
@@ -74,11 +38,51 @@ en:
       short: "%b %d"
       long: "%B %d, %Y"
 
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    day_names:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    abbr_day_names:
+      - Sun
+      - Mon
+      - Tue
+      - Wed
+      - Thu
+      - Fri
+      - Sat
 
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names:
+      - ~
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+    abbr_month_names:
+      - ~
+      - Jan
+      - Feb
+      - Mar
+      - Apr
+      - May
+      - Jun
+      - Jul
+      - Aug
+      - Sep
+      - Oct
+      - Nov
+      - Dec
     order:
       - :year
       - :month
@@ -229,3 +233,38 @@ en:
       less_than_or_equal_to: "must be less than or equal to %{count}"
       odd: "must be odd"
       even: "must be even"
+
+  activerecord:
+    models:
+      course: "Course"
+      lecture: "Lecture"
+      presence: "Presence"
+    attributes:
+      course:
+        moodle_id: "Moodle Course ID"
+        name: "Course Name"
+      lecture:
+        course_id: "Course"
+        description: "Lecture Overview"
+        start_time: "Start Time"
+        end_time: "End Time"
+      presence:
+        name: "Name"
+        mail: "E-mail"
+        created_at: "Time"
+        proxyed: "Proxied Registration"
+
+    errors:
+      template:
+        header:
+          one:    "1 error prohibited this %{model} from being saved"
+          other:  "%{count} errors prohibited this %{model} from being saved"
+        body: "There were problems with the following fields:"
+
+      messages:
+        taken: "has already been taken"
+        record_invalid: "Validation failed: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute} %{message}"
