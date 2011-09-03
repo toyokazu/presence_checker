@@ -120,7 +120,7 @@ User login name (uid) is provided as request.env["omniauth"]["uid"] by OmniAuth.
 OmniAuth seems not to handle Phusion Passenger 'sub uri' for failure path (/auth/failure). So thus, the configuration as the following should be added to the omniauth.rb.
 
     configure do |config|
-      if RAILS_ENV == 'production'
+      if Rails.env == 'production'
         config.on_failure = Proc.new do |env|
           message_key = env['omniauth.error.type']
           new_path = "/presence_checker/auth/failure?message=#{message_key}"

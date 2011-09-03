@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def shib_auth_url
-    if RAILS_ENV == 'production'
+    if Rails.env == 'production'
       "/presence_checker/auth/shibboleth"
     else
       "/auth/shibboleth"
