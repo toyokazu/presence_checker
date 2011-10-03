@@ -1,6 +1,6 @@
 <% title t('activerecord.models.presence') + t('registration') %>
 
-<% form_for :presence, :url => {:action => 'create'} do |f| %>
+<%= form_for :presence, :url => {:action => 'create'} do |f| %>
 <table>
   <tr>
     <td><%= t('activerecord.attributes.course.name') %></td>
