@@ -16,6 +16,8 @@ This application requires the following Gems:
 
 bundle >= 1.0.0
 rails >= 3.0.0 (rails, activesupport, activerecord, actionpack)
+omniauth >= 1.0.0
+omniauth-shibboleth >= 1.0.0
 
 About installation of RubyGems, refer the URL below:
 (http://docs.rubygems.org/read/chapter/3)
@@ -23,15 +25,6 @@ About installation of RubyGems, refer the URL below:
 After installing RubyGems and bundle gem, you can install required gems by the command below:
 
     % bundle install
-
-Update 'oa-enterprise' gem to the Shibboleth supported version.
-
-    % cd ../
-    % git clone https://github.com/toyokazu/omniauth_shibboleth.git
-    % cd omniauth/oa-enterprise
-    % bundle install
-    % rake gem
-    % gem install dist/oa-enterprise-x.x.x.gem
 
 
 ## Application configuration
@@ -76,8 +69,8 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
     ...
     </Directory>
     ### Virtual Host and Passenger Settings
-    PassengerRoot /Users/username/.rvm/gems/ruby-1.9.2-head/gems/passenger-3.0.4
-    PassengerRuby /Users/username/.rvm/wrappers/ruby-1.9.2-head/ruby
+    PassengerRoot /Users/username/.rvm/gems/ruby-1.9.2-p290/gems/passenger-3.0.11
+    PassengerRuby /Users/username/.rvm/wrappers/ruby-1.9.2-p290/ruby
     PassengerMaxPoolSize 10
     PassengerUser username
     PassengerGroup groupname
@@ -111,21 +104,19 @@ For production, omniauth (Shibboleth strategy) requires that Shibboleth SP provi
       require valid-user
     </Location>
 
-User login name (uid) is provided as request.env["omniauth"]["uid"] by OmniAuth. The default setting of the Shibboleth attribute name used as the user login name (uid) is "uid". If you want to change the Shibboleth attribute name, edit omniauth.rb.
+User login name (uid) is provided as request.env["omniauth"]["uid"] by OmniAuth. The default setting of the Shibboleth attribute name used as the user login name (uid) is "eppn". If you want to change the Shibboleth attribute name, edit omniauth.rb.
 
-    ### change :uid_attr option if needed
+    ### change :uid_field option if needed
     % vi config/initializers/omniauth.rb
-      provider :shibboleth, {:uid_attr => 'uid'}
+      provider :shibboleth, {:uid_field => 'uid'}
 
 OmniAuth seems not to handle Phusion Passenger 'sub uri' for failure path (/auth/failure). So thus, the configuration as the following should be added to the omniauth.rb.
 
     configure do |config|
-      if Rails.env == 'production'
-        config.on_failure = Proc.new do |env|
-          message_key = env['omniauth.error.type']
-          new_path = "/presence_checker/auth/failure?message=#{message_key}"
-          [302, {'Location' => new_path, 'Content-Type'=> 'text/html'}, []]
-        end
+      config.on_failure = Proc.new do |env|
+        message_key = env['omniauth.error.type']
+        new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}"
+        [302, {'Location' => new_path, 'Content-Type'=> 'text/html'}, []]
       end
     end
 
