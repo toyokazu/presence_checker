@@ -21,11 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def shib_auth_url
-    if Rails.env == 'production'
-      "/presence_checker/auth/shibboleth"
-    else
-      "/auth/shibboleth"
-    end
+    "#{request.env['SCRIPT_NAME']}/auth/shibboleth"
   end
 
   def authenticate!
