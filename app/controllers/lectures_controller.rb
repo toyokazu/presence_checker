@@ -4,7 +4,7 @@ class LecturesController < ApplicationController
 
   def index
     @course_id = params[:course_id]
-    @lectures = Lecture.with_course_id(@course_id).all
+    @lectures = Lecture.with_course_id(@course_id).all.sort {|a,b| a.start_time <=> b.start_time}
 
     respond_to do |format|
       format.html # index.html.erb
