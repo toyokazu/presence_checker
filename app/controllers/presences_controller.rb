@@ -93,7 +93,7 @@ class PresencesController < ApplicationController
     # presence registration from Moodle (new action)
     if action_name == 'new' && !params[:moodle_course_id].nil?
       # find Course related to the moodle course id
-      presence.course = Course.where(moodle_id: params[:moodle_course_id])
+      presence.course = Course.where(moodle_id: params[:moodle_course_id]).first
       if presence.course.nil?
         redirect_to root_url, :flash => {:error => t('presences.errors.valid_moodle_course_id_is_not_specified')} and return nil
       end
