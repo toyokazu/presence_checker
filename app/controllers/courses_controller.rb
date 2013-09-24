@@ -41,7 +41,7 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.xml
   def create
-    @course = Course.new(params[:course])
+    @course = Course.new(course_params)
 
     respond_to do |format|
       if @course.save
@@ -61,7 +61,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
 
     respond_to do |format|
-      if @course.update_attributes(params[:course])
+      if @course.update_attributes(course_params)
         flash[:notice] = 'Course was successfully updated.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }
@@ -82,5 +82,10 @@ class CoursesController < ApplicationController
       format.html { redirect_to(courses_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def course_params
+    params.require(:course).permit(:moodle_id, :name)
   end
 end

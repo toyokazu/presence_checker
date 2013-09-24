@@ -61,7 +61,7 @@ class PresencesController < ApplicationController
   end
 
   def create
-    @presence = init_presence(Presence.new(params[:presence]))
+    @presence = init_presence(Presence.new(presence_params))
     if @presence.nil?
       return false
     end
@@ -93,7 +93,7 @@ class PresencesController < ApplicationController
     # presence registration from Moodle (new action)
     if action_name == 'new' && !params[:moodle_course_id].nil?
       # find Course related to the moodle course id
-      presence.course = Course.first(:conditions => ['moodle_id = ?', params[:moodle_course_id]])
+      presence.course = Course.where(moodle_id: params[:moodle_course_id])
       if presence.course.nil?
         redirect_to root_url, :flash => {:error => t('presences.errors.valid_moodle_course_id_is_not_specified')} and return nil
       end
@@ -116,7 +116,7 @@ class PresencesController < ApplicationController
       end
     end
     # find ongoing Lecture
-    presence.lecture = Lecture.with_course_id(presence.course.id).ongoing(Time.now).first
+    presence.lecture = Lecture.where(course_id: presence.course.id).where('start_time <= :time and end_time >= :time', :time => Time.now).first
     if presence.lecture.nil?
       redirect_to root_url, :flash => {:error => t('presences.errors.no_lecture_is_ongoing')} and return nil
     end
@@ -146,6 +146,10 @@ class PresencesController < ApplicationController
   def ip_addr_check(remote_addr)
     net_addrs = APP_CONFIG[:networks].map {|addr| IPAddr.new(addr)}
     net_addrs.any? {|net_addr| net_addr.include?(remote_addr)}
+  end
+
+  def presence_params
+    params.require(:presence).permit(:course_id, :login, :name, :mail, :proxyed)
   end
 
 end

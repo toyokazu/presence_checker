@@ -1,7 +1,7 @@
 PresenceChecker::Application.routes.draw do
-  match '/auth/:provider/callback' => 'sessions#create'
-  match '/auth/failure' => 'sessions#failure'
-  match '/signout' => 'sessions#destroy', :as => :signout
+  get '/auth/:provider/callback' => 'sessions#create'
+  get '/auth/failure' => 'sessions#failure'
+  get '/signout' => 'sessions#destroy', :as => :signout
 
   resources :courses do
     resources :lectures do

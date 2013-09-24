@@ -4,7 +4,7 @@ class LecturesController < ApplicationController
 
   def index
     @course_id = params[:course_id]
-    @lectures = Lecture.with_course_id(@course_id).all.sort {|a,b| a.start_time <=> b.start_time}
+    @lectures = Lecture.where(course_id: @course_id).sort {|a,b| a.start_time <=> b.start_time}
 
     respond_to do |format|
       format.html # index.html.erb
@@ -43,7 +43,7 @@ class LecturesController < ApplicationController
   # POST /lectures
   # POST /lectures.xml
   def create
-    @lecture = Lecture.new(params[:lecture])
+    @lecture = Lecture.new(lecture_params)
 
     respond_to do |format|
       if @lecture.save
@@ -63,7 +63,7 @@ class LecturesController < ApplicationController
     @lecture = Lecture.find(params[:id])
 
     respond_to do |format|
-      if @lecture.update_attributes(params[:lecture])
+      if @lecture.update_attributes(lecture_params)
         flash[:notice] = 'Lecture was successfully updated.'
         format.html { redirect_to(@lecture) }
         format.xml  { head :ok }
@@ -85,5 +85,10 @@ class LecturesController < ApplicationController
       format.html { redirect_to(course_lectures_url(@course)) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def lecture_params
+    params.require(:lecture).permit(:course_id, :description, :start_time, :end_time)
   end
 end

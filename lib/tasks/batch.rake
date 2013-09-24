@@ -14,19 +14,21 @@ namespace :batch do
       csv_students = CSV.read(src_csv)
       attrs_array = csv_students.shift
       attrs = {}
-      attrs_array.each_with_index {|v, i| attrs[NKF.nkf('-Sw', v)] = i}
-      db_students_own = Presence.count(:group => :login, :conditions => {:proxyed => false})
-      db_students_proxyed = Presence.count(:group => :login, :conditions => {:proxyed => true})
-      #Presence.count(:group => :login).sort.each {|a| puts "#{a[0].gsub(/g0/, '')}, #{a[1]}"}
+      attrs_array.each_with_index {|v, i| attrs[NKF.nkf('-w', v)] = i}
+      db_students_own = Presence.group(:login).where(:proxyed => false).count
+      db_students_proxyed = Presence.group(:login).where(:proxyed => true).count
       dst_tsv = ENV["RECORDS_CSV"].nil? ? "#{Rails.root}/#{Batch::RECORDS_CSV}" : "#{ENV["RECORDS_CSV"]}" 
       open(dst_tsv, "wb") do |fout|
-        Batch::RECORD_ATTRS.each {|v| fout.print NKF.nkf('-Ws', "#{v},")}
-        fout.print NKF.nkf('-Ws', "出席回数 (DB 本人),出席回数 (DB 代理),出席回数 (紙)\n")
+        Batch::RECORD_ATTRS.each {|v| fout.print "#{v},"}
+        #Batch::RECORD_ATTRS.each {|v| fout.print NKF.nkf('-Ws', "#{v},")}
+        fout.print "出席回数 (DB 本人),出席回数 (DB 代理),出席回数 (紙)\n"
+        #fout.print NKF.nkf('-Ws', "出席回数 (DB 本人),出席回数 (DB 代理),出席回数 (紙)\n")
         csv_students.each do |student|
           Batch::RECORD_ATTRS.each do |v|
             fout.print "#{student[attrs[v]]}, "
           end
-          fout.print NKF.nkf('-Ws', "#{db_students_own["g" + student[attrs["学生証番号"]]]},#{db_students_proxyed["g" + student[attrs["学生証番号"]]]},\n")
+          fout.print "#{db_students_own["g" + student[attrs["学生証番号"]]]},#{db_students_proxyed["g" + student[attrs["学生証番号"]]]},\n"
+          #fout.print NKF.nkf('-Ws', "#{db_students_own["g" + student[attrs["学生証番号"]]]},#{db_students_proxyed["g" + student[attrs["学生証番号"]]]},\n")
         end
       end
     rescue => error
