@@ -24,5 +24,7 @@ PresenceChecker::Application.configure do
 
   config.time_zone = 'Osaka'
   I18n.default_locale = :ja
+
+  config.secret_key_base = 'testtest'
 end
 

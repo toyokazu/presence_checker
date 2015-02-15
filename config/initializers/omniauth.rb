@@ -8,5 +8,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   #  end
   #end
   provider :shibboleth, {:uid_field => 'uid'}
+  #provider :shibboleth, {:uid_field => 'uid', :request_type => :header}
+  #provider :shibboleth, {:debug => true}
   #provider :cas, {:cas_server => 'http://localhost:8443', :disable_ssl_verification => true}
 end
